@@ -1,10 +1,7 @@
 package ua.fedii.spring.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.fedii.spring.entity.Customer;
 import ua.fedii.spring.service.CustomerService;
 
@@ -28,6 +25,14 @@ public class CustomerRestController {
         if (customer == null) {
             throw new CustomerNotFoundException("Customer id not found - " + customerId);
         }
+
+        return customer;
+    }
+
+    @PostMapping("/customers")
+    public Customer addCustomer(@RequestBody Customer customer) {
+        customer.setId(0);
+        customerService.saveCustomer(customer);
 
         return customer;
     }
